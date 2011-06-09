@@ -63,3 +63,13 @@ task :bundle_cookbook, :cookbook do |t, args|
 
   FileUtils.rm_rf temp_dir
 end
+
+namespace :appserver do
+
+  desc "Create a new app server instance."
+  task :create, :zone, :name, :region, :keypath do |t, args|
+    system "knife ec2 server create 'role[app-server]' --image ami-daf615b3 -f c1.medium -Z #{args.zone} -N #{args.name} --region #{args.region} --ssh-key app-server -i #{args.keypath}"
+  end
+
+end
+
